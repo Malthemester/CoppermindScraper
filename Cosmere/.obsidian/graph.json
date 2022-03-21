@@ -1,0 +1,107 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "line:(Featured in Mistborn )",
+      "color": {
+        "a": 1,
+        "rgb": 14701138
+      }
+    },
+    {
+      "query": "line:(Featured In Stormlight Archive)",
+      "color": {
+        "a": 1,
+        "rgb": 14725458
+      }
+    },
+    {
+      "query": "line:(Featured In Elantris)",
+      "color": {
+        "a": 1,
+        "rgb": 11657298
+      }
+    },
+    {
+      "query": "line:(Featured Skyward)",
+      "color": {
+        "a": 1,
+        "rgb": 5431378
+      }
+    },
+    {
+      "query": "line:(Featured In Warbreaker)",
+      "color": {
+        "a": 1,
+        "rgb": 5431473
+      }
+    },
+    {
+      "query": "line:(Featured In White Sand)",
+      "color": {
+        "a": 1,
+        "rgb": 5419488
+      }
+    },
+    {
+      "query": "line:(Featured In Sixth of the Dusk)",
+      "color": {
+        "a": 1,
+        "rgb": 5395168
+      }
+    },
+    {
+      "query": "line:(Featured In The Emperor's Soul)",
+      "color": {
+        "a": 1,
+        "rgb": 11621088
+      }
+    },
+    {
+      "query": "line:(Featured In Reckoners)",
+      "color": {
+        "a": 1,
+        "rgb": 14701233
+      }
+    },
+    {
+      "query": "Featured In Alcatraz Versus the Evil Librarians",
+      "color": {
+        "a": 1,
+        "rgb": 14701138
+      }
+    },
+    {
+      "query": "line:(Featured In The Rithmatist)",
+      "color": {
+        "a": 1,
+        "rgb": 3309922
+      }
+    },
+    {
+      "query": "line:(Featured In Dreamer)",
+      "color": {
+        "a": 1,
+        "rgb": 11657298
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": false,
+  "textFadeMultiplier": -3,
+  "nodeSizeMultiplier": 0.620909916042659,
+  "lineSizeMultiplier": 2.04410029498525,
+  "collapse-forces": false,
+  "centerStrength": 0.360767959713589,
+  "repelStrength": 20,
+  "linkStrength": 1,
+  "linkDistance": 182,
+  "scale": 0.016699416021245875,
+  "close": false
+}

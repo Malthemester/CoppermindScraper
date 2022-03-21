@@ -1,0 +1,19 @@
+|**Razon's camera**|
+|-|-|
+|**World**|[[Earth (Legion)\|Earth (Legion)]]|
+|**Featured In**|*Legion (series)*|
+
+**Razon's camera** is a device which takes photographs of the past, developed by [[Balubal Razon\|Balubal Razon]] in conjunction with [[Azari Laboratories\|Azari Laboratories]]. A second version, capable of using instant film but incapable of looking very far back in time, was re-created based on the first by [[Stephen Leeds\|Stephen Leeds]].
+
+## Appearance and Function
+Razon's original camera appeared to be an ordinary  camera. Stephen's recreation was a big, old-school camera, the kind used by news photographers decades ago, so presumably similar.
+It was more user-friendly than one of those, however. Stephen's version includes a simple dial to control the "time focus". Both versions could be attached to a tripod.
+The camera uses a special kind of flash bulb which allows it to do take images of scenes as they were in the past. This bulb burns out after a very limited number of uses. The light from the flash is referred to by [[Arnaud\|Arnaud]] as penetrating time, but little else is known of how exactly it functions. It will take a picture into the past as if the camera was in the place it is in now, and it will always illuminate the area with its flash, sometimes resulting in poorly composed photos. It produces photos on film in medium format, which must then be developed. The version that Stephen re-creates has been modified to use instant film.
+
+## History
+Razon came to Azari Labratories with only a picture of  and a non-functional prototype camera. After eighteen months of work, funded by the lab, he had a somewhat reliably functioning product. To prove that the camera works, Razon, potentially accompained by Azari employees, took pictures of famous places and people during the past, such as  and the . These results were further validated in the lab of Azari Labratories under rigorous experimental conditions. They also took photos of [[Sandra\|Sandra]], hoping to use them as a bribe to enlist Stephen's help when the camera went public. It is likely they did the same for many important people. Razon wished to take photos that would help solve mysteries such as the  and the , but Azari declined. Razon then stole the camera and took it to  to take a picture of . Shortly afterwards, the  captured the camera, along with Razon himself. Stephen and [[Monica\|Monica]] went to search for the camera, eventually falling into the hands of the Abu Sayyaf as well. Razon refused to repair the camera and was subsequently killed by the Abu Sayyaf. The escape of Monica provoked a shooting match during which all of the terrorists were shot. One didn't die, however, and pulled the pin on a grenade, thus destroying the camera. However, Stephen was able to save the flash bulb.
+In order to re-create the camera, Stephen worked with a new aspect he manifested just for this purpose, Arnaud. Stephen spent many nights working on it, with Arnaud guiding his hands. By the time he went chasing after [[Sandra\|Sandra]], Stephen had a working model, although it can't go back very far before the photos begin to deteriorate in quality. Arnaud was unsure how Razon got around this limitation. Later that day, Stephen gave it to [[Barb\|Barb]] to take photos of the fairgrounds going back half-hours earlier that day, revealing the presence of [[Kyle\|Kyle]] and [[Sandra\|Sandra]]. The camera was left in Stephen's limo while Stephen infiltrated [[Wode\|Walters and Ostman Detention Enterprises]], and afterwards, Stephen used it to take a picture in which he (but nobody else) can see his aspects.
+
+
+
+https://coppermind.net/wiki/Razon%27s_camera

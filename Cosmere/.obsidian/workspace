@@ -1,0 +1,98 @@
+{
+  "main": {
+    "id": "9a3115fc42c05945",
+    "type": "split",
+    "children": [
+      {
+        "id": "bd8036cda203459b",
+        "type": "leaf",
+        "state": {
+          "type": "graph",
+          "state": {}
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2934399d27ec5731",
+    "type": "split",
+    "children": [
+      {
+        "id": "9d8acf4cc043c302",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6b810bfd0c40a880",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "01d08095cfc2c50b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a22a7a2895c539e0",
+    "type": "split",
+    "children": [
+      {
+        "id": "ddc69c3587ca3a6d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4d4e680da067cd50",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "bd8036cda203459b",
+  "lastOpenFiles": [
+    "Investiture.md",
+    "Dreamer (character).md",
+    "Rithmatics.md",
+    "Alcatraz Smedry.md",
+    "Earth (Reckoners).md",
+    "Scadrial.md",
+    "Final Empire.md",
+    "Rose Empire.md",
+    "First of the Sun.md",
+    "Hoid.md"
+  ]
+}
