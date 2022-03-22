@@ -122,7 +122,7 @@ wikiDone = []
 def LinkToMarkdown(a):
     ref = a.get('href')
     ref = str(ref)
-    if "File:" in ref or "Artists" in ref or "#" in ref or ":" in ref:
+    if "File:" in ref or "Artists" in ref or "#" in ref or ":" in ref or "wikipedia" in ref:
         return a.text
     if "wiki" in ref:
         if BaseURL + ref not in wikiQueue:
@@ -144,7 +144,7 @@ while len(wikiQueue) > 0:
     if content is None:
         continue
     title = doc.find(id="firstHeading").text
-    if "File:" in title or "Artists" in title or "#" in title or "/" in title or ":" in title:
+    if "File:" in title or "Artists" in title or "#" in title or "/" in title or ":" in title or "wikipedia" in title:
         continue
     print("URL: " + wikiPage + "    " + str(len(wikiQueue)) + " left" + " | " +
           str(len(wikiDone)) + " completed")

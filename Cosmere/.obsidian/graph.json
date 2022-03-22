@@ -90,18 +90,32 @@
         "a": 1,
         "rgb": 11657298
       }
+    },
+    {
+      "query": "line:(Featured In Shadows for Silence)",
+      "color": {
+        "a": 1,
+        "rgb": 13205488
+      }
+    },
+    {
+      "query": "line:(Featured In Legion)",
+      "color": {
+        "a": 1,
+        "rgb": 5431473
+      }
     }
   ],
   "collapse-display": false,
   "showArrow": false,
-  "textFadeMultiplier": -3,
+  "textFadeMultiplier": -1.8,
   "nodeSizeMultiplier": 0.620909916042659,
   "lineSizeMultiplier": 2.04410029498525,
   "collapse-forces": false,
-  "centerStrength": 0.360767959713589,
-  "repelStrength": 20,
+  "centerStrength": 0.557164214336297,
+  "repelStrength": 10.9418522307027,
   "linkStrength": 1,
   "linkDistance": 182,
-  "scale": 0.016699416021245875,
+  "scale": 0.06507774474096661,
   "close": false
 }

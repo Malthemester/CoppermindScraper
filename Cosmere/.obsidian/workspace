@@ -45,11 +45,13 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "a22a7a2895c539e0",
@@ -84,15 +86,15 @@
   },
   "active": "bd8036cda203459b",
   "lastOpenFiles": [
+    "Wode.md",
+    "Tobias.md",
+    "Tor Books.md",
+    "Scholastic Corporation.md",
+    "17thshard.com.md",
+    "Stephen Leeds.md",
+    "Cymatics.md",
+    "Forests of Hell.md",
     "Investiture.md",
-    "Dreamer (character).md",
-    "Rithmatics.md",
-    "Alcatraz Smedry.md",
-    "Earth (Reckoners).md",
-    "Scadrial.md",
-    "Final Empire.md",
-    "Rose Empire.md",
-    "First of the Sun.md",
-    "Hoid.md"
+    "Dreamer (character).md"
   ]
 }
