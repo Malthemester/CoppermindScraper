@@ -13,7 +13,6 @@
 
 This page or section needs to be updated with new information for *Rhythm of War*!Be aware that in its current state, it may not include all additional content yet.
 
-For the [[Mokia\|Mokian]] advisor, see [[Mink (Alcatraz)\|Mink (Alcatraz)]].
 >“*You... don't know our gancho, Brightlord. This is exactly how he treats dangerous situations.*”
 \-One of the Mink's bodyguards, on his habit of disappearing randomly[2]
 

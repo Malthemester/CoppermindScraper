@@ -36,8 +36,8 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
-                "matchingCase": false,
+                "query": "Quentin Smedry",
+                "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -50,8 +50,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "a22a7a2895c539e0",
@@ -86,15 +85,15 @@
   },
   "active": "bd8036cda203459b",
   "lastOpenFiles": [
+    "Stormfather.md",
     "Wode.md",
-    "Tobias.md",
-    "Tor Books.md",
-    "Scholastic Corporation.md",
-    "17thshard.com.md",
-    "Stephen Leeds.md",
-    "Cymatics.md",
-    "Forests of Hell.md",
-    "Investiture.md",
-    "Dreamer (character).md"
+    "Perfect State.md",
+    "Roshar.md",
+    "Alcatraz Smedry.md",
+    "Alcatraz Versus the Evil Librarians.md",
+    "Bastille.md",
+    "Folsom Smedry.md",
+    "House Smedry.md",
+    "Leavenworth Smedry.md"
   ]
 }

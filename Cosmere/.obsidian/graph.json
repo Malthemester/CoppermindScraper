@@ -8,10 +8,31 @@
   "collapse-color-groups": false,
   "colorGroups": [
     {
+      "query": "line:(Featured In Warbreaker)",
+      "color": {
+        "a": 1,
+        "rgb": 5431473
+      }
+    },
+    {
+      "query": "line:(Featured In White Sand)",
+      "color": {
+        "a": 1,
+        "rgb": 5419488
+      }
+    },
+    {
       "query": "line:(Featured in Mistborn )",
       "color": {
         "a": 1,
         "rgb": 14701138
+      }
+    },
+    {
+      "query": "line:(Featured In Sixth of the Dusk)",
+      "color": {
+        "a": 1,
+        "rgb": 5395168
       }
     },
     {
@@ -36,27 +57,6 @@
       }
     },
     {
-      "query": "line:(Featured In Warbreaker)",
-      "color": {
-        "a": 1,
-        "rgb": 5431473
-      }
-    },
-    {
-      "query": "line:(Featured In White Sand)",
-      "color": {
-        "a": 1,
-        "rgb": 5419488
-      }
-    },
-    {
-      "query": "line:(Featured In Sixth of the Dusk)",
-      "color": {
-        "a": 1,
-        "rgb": 5395168
-      }
-    },
-    {
       "query": "line:(Featured In The Emperor's Soul)",
       "color": {
         "a": 1,
@@ -71,10 +71,10 @@
       }
     },
     {
-      "query": "Featured In Alcatraz Versus the Evil Librarians",
+      "query": "line:(Featured In Alcatraz Versus the Evil Librarians)",
       "color": {
         "a": 1,
-        "rgb": 14701138
+        "rgb": 16160920
       }
     },
     {
@@ -88,7 +88,7 @@
       "query": "line:(Featured In Dreamer)",
       "color": {
         "a": 1,
-        "rgb": 11657298
+        "rgb": 11759872
       }
     },
     {
@@ -102,7 +102,7 @@
       "query": "line:(Featured In Legion)",
       "color": {
         "a": 1,
-        "rgb": 5431473
+        "rgb": 8470871
       }
     }
   ],
@@ -111,11 +111,11 @@
   "textFadeMultiplier": -1.8,
   "nodeSizeMultiplier": 0.620909916042659,
   "lineSizeMultiplier": 2.04410029498525,
-  "collapse-forces": false,
+  "collapse-forces": true,
   "centerStrength": 0.557164214336297,
   "repelStrength": 10.9418522307027,
   "linkStrength": 1,
   "linkDistance": 182,
-  "scale": 0.06507774474096661,
-  "close": false
+  "scale": 0.4048803929996098,
+  "close": true
 }

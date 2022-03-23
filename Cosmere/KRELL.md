@@ -9,7 +9,6 @@
 
 This page or section needs to be updated with new information for *Starsight* and *Sunreach*!Be aware that in its current state, it may not include all additional content yet.
 
-This is one of several articles with this name. For others, see [[Krell\|Krell]].
 >“*They kept us contained not out of spite, but because they were genuinely terrified of humankind.*”
 \-Spensa[1]
 

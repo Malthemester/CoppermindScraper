@@ -5,7 +5,7 @@
 |**World**|[[Earth (Legion)\|Earth (Legion)]]|
 |**Featured In**|*Legion*|
 
-For the bounty hunter on Threnody, see [[Tobias (Threnody)\|Tobias (Threnody)]].
+
 **Tobias** is one of [[Stephen Leeds\|Stephen Leeds']] [[Aspect\|aspects]].
 He is a lanky, dark-skinned old man with white hair who is an expert on history and trivia. He tends to ramble on about things and has been coined a walking Wikipedia. Stephen seems to find his voice quite comforting.
 His insanity is that he hallucinates about an astronaut named Stan in space who lives on a satellite, who occasionally sends him weather information. Stan is not one of Stephen's hallucinations, but is Tobias'. Stephen also mentions that Tobias has schizophrenia.

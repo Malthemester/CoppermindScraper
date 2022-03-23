@@ -54,3 +54,5 @@ For a full statistical analysis, see [[The Well of Ascension/Statistical analysi
 
 
 https://coppermind.net/wiki/The_Well_of_Ascension
+	
+Featured in Mistborn (For grouping) 

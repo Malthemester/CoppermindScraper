@@ -4,7 +4,7 @@
 |**Era**|[[Final Empire\|Final Empire]]|
 |**World**|[[Scadrial\|Scadrial]]|
 |**Universe**|[[Cosmere\|Cosmere]]|
-|**Books**|*Mistborn Era 2*|
+|**Featured In**|*Mistborn Era 2*|
 This page or section needs to be updated with new information for *Shadows of Self* and *The Bands of Mourning*!Be aware that in its current state, it may not include all additional content yet.
 
 **House Ladrian** was a major socio-political entity on [[Scadrial\|Scadrial]] after the ascension of [[Harmony\|Harmony]].

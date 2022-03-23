@@ -8,7 +8,6 @@
 |**Universe**|[[Cosmere\|Cosmere]]|
 |**Featured In**|*The Stormlight Archive*|
 
-For the *Legion (series)* character, see [[Zen Rigby\|Zen Rigby]].
 **Zen-daughter-Vath** is a [[Shin\|Shin]] scholar.
 She researched [[Spren\|spren]], sketching spren which appeared around heavy objects which she conjectured to be gravitationspren.
 
