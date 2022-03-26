@@ -7,6 +7,14 @@ URL = "https://coppermind.net/wiki/Vin"
 
 done = False
 
+node = []
+links = []
+
+{
+    "id": "id1",
+    "name": "name1",
+    "val": 30
+}
 
 wikiQueue = [URL]
 wikiDone = []
@@ -19,20 +27,27 @@ def LinkToMarkdown(a):
         return
 
     ref = a.get('href')
-    ref = str(ref)
+    refUrl = BaseURL + str(ref)
 
-    if BaseURL + ref in UrlTitle[0]:
-        title = UrlTitle[1][UrlTitle[0].index(BaseURL + ref)]
+    title = ""
 
-    HTMLpage = requests.get(BaseURL + ref)
+    if refUrl in UrlTitle[0]:
+        title = UrlTitle[1][UrlTitle[0].index(refUrl)]
+    else:
+        HTMLpage = requests.get(refUrl)
+        doc = BeautifulSoup(HTMLpage.text, "html.parser")
+        content = doc.find(class_="mw-parser-output")
+        title = doc.find(id="firstHeading").text
+        UrlTitle[0].append(refUrl)
+        UrlTitle[1].append(title)
 
-    if "File:" in ref or "Artists" in ref or "#" in ref or ":" in ref or "wikipedia" in ref:
+    if "File:" in refUrl or "Artists" in refUrl or "#" in refUrl or ":" in refUrl or "wikipedia" in refUrl:
         return
-    if "wiki" in ref:
-        if BaseURL + ref not in wikiQueue:
-            if BaseURL + ref not in wikiDone:
-                wikiQueue.append(BaseURL + ref)
-                print("wikiQueue: " + BaseURL + ref)
+    if "wiki" in refUrl:
+        if refUrl not in wikiQueue:
+            if refUrl not in wikiDone:
+                wikiQueue.append(refUrl)
+                print("wikiQueue: " + refUrl)
         title = ref.replace(
             "/wiki/", "").replace("_", " ").replace("%27", "'")
 
