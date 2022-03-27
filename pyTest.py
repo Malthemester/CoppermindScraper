@@ -3,3 +3,6 @@ UrlTitle = [["https://coppermind.net/wiki/Spren", "https://coppermind.net/wiki/F
 
 if "https://coppermind.net/wiki/Spren" in UrlTitle[0]:
     print(UrlTitle[1][UrlTitle[0].index("https://coppermind.net/wiki/Spren")])
+
+if not None:
+    print("none")
