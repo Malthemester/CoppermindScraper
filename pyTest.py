@@ -1,8 +1,22 @@
-UrlTitle = [["https://coppermind.net/wiki/Spren", "https://coppermind.net/wiki/Fabrial"],
-            ["Spren", "Fabrial"]]
+class Link:
+    val = 0
 
-if "https://coppermind.net/wiki/Spren" in UrlTitle[0]:
-    print(UrlTitle[1][UrlTitle[0].index("https://coppermind.net/wiki/Spren")])
+    def __init__(self, source, target):
+        self.source = source
+        self.target = target
+    
+    def __eq__(self, other):
+        if isinstance(other, Link):
+            if (self.source == other.source and self.target == other.target) or (self.source == other.target and self.target == other.source):
+                return True
+        return False
 
-if not None:
-    print("none")
+    def json(self):
+        return {"source": self.source, "target": self.target}
+
+links = []
+links.append(Link(1,2))
+links.append(Link(1,3))
+
+print(Link(1,2) == Link(1,2))
+print(Link(2,1) in links)

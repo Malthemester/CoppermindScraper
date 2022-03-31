@@ -9,19 +9,24 @@ function App() {
 
   useEffect(() => {
 
-    graphRef.current.d3Force("link").distance(100);
-    graphRef.current.d3Force('charge').strength(0);
+    graphRef.current.d3Force("link").distance(30);
+    graphRef.current.d3Force('charge').strength(-500);
+    // graphRef.current.d3Force('collide', d3.forceCollide(4));
+
     // graphRef.current.d3Force('center', null);
     // graphRef.current.d3Force('charge', null);
 
   }, []);
 
-  const myData1 = require('./nodesData.json');
+  const nodesData = require('./nodesData.json');
   const linksData = require('./linksData.json');
 
-  const myData3 =
+  console.log(nodesData.length) // 3245
+  console.log(linksData.length) // 75804
+
+  const graphData =
   {
-    nodes: myData1,
+    nodes: nodesData,
     links: linksData
   }
 
@@ -30,7 +35,8 @@ function App() {
       ref={graphRef}
       warmupTicks={100}
       cooldownTicks={0}
-      graphData={myData3}
+      graphData={graphData}
+      enableNodeDrag={false} 
     />
   );
 }
