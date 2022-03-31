@@ -1,8 +1,12 @@
 import json
+import math
 import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+
 from bs4 import BeautifulSoup
 BaseURL = "https://coppermind.net"
-URL = "/wiki/Notum"
+URL = "/wiki/Cosmere"
 
 nodes = []
 links = []
@@ -30,7 +34,6 @@ class Link:
 
 
 wikiQueue = []
-wikiDone = []
 urlContent = [[], [], []]
 
 
@@ -42,21 +45,35 @@ def getTitle(url):
     if url in urlContent[0]:
         return urlContent[1][urlContent[0].index(url)]
 
-    if ("File:" in url or "Artists" in url or "edit" in url
+    if ("File:" in url or "Artists" in url or "edit" in url or "/Cover" in url
             or "#" in url or ":" in url or "wikipedia" in url):
         return None
 
-    pageHTML = requests.get(BaseURL + url)
-    doc = BeautifulSoup(pageHTML.text, "html.parser")
-    title = doc.find(id="firstHeading").text
+    # print(f"Getting: {BaseURL + url}")
+
+    try:
+        pageHTML = requests.get(BaseURL + url)
+        doc = BeautifulSoup(pageHTML.text, "html.parser")
+        title = doc.find(id="firstHeading").text
+    except KeyError:
+        pass
 
     if ("File:" in title or "Artists" in title or "#" in title or "edit" in title
             or "/" in title or ":" in title or "wikipedia" in pageHTML.url):
+        urlContent[0].append(url)
+        urlContent[1].append(None)
+        urlContent[2].append(None)
         return None
 
     content = doc.find(class_="mw-parser-output")
     if content is None:
         return None
+
+    if title in urlContent[1]:
+        urlContent[0].append(url)
+        urlContent[1].append(title)
+        urlContent[2].append(None)
+        return title
 
     urlContent[0].append(url)
     urlContent[1].append(title)
@@ -64,7 +81,7 @@ def getTitle(url):
 
     wikiQueue.append(title)
 
-    print("Added: " + title + "   from: " + url)
+    print(f"Queued: {title :<28} from: {url}")
 
     return title
 
@@ -84,7 +101,6 @@ def refToLink(a, title):
         return None
 
     ref = a.get('href')
-
     target = getTitle(ref)
 
     if target:
@@ -97,14 +113,24 @@ def pageToNode(title, content):
 
     node = Node(title)
 
-    aTags = content.find_all('a')
+    aTags = None
+    try:
+        aTags = content.find_all('a')
+    except:
+        pass
 
-    for aTag in aTags:
-        link = refToLink(aTag, title)
+    if aTags is None:
+        return
 
-        if link:
-            links.append(link)
-            node.val += 1
+    processes = []
+    with ThreadPoolExecutor(max_workers=30) as executor:
+        for aTag in aTags:
+            processes.append(executor.submit(refToLink, aTag, title))
+
+        for link in as_completed(processes):
+            if link.result():
+                links.append(link.result())
+                node.val += 1
 
     nodes.append(node)
 
@@ -133,13 +159,25 @@ def nodesToJson(nodes, links):
 
 
 getTitle(URL)
+
+completed = 0
+start = time.time()
 while len(wikiQueue) > 0:
 
-    wikiPage = wikiQueue.pop()
-    print(str(len(wikiQueue)) + " | " + wikiPage)
+    wikiPage = wikiQueue.pop(0)
+    # if completed % 100 == 0:
+    print(
+        f"\nQueue : {str(len(wikiQueue)) :<5} Completed:{completed :<5} | Curent: {wikiPage:<20}  | Time elapsed: {math.round(time.time() - start)}")
 
     content = urlContent[2][urlContent[1].index(wikiPage)]
-
     pageToNode(wikiPage, content)
 
-    nodesToJson(nodes, links)
+    urlContent[2][urlContent[1].index(wikiPage)] = "Done"
+
+    completed += 1
+
+print(
+    f"Queue:{str(len(wikiQueue)) :<5} Completed:{completed :<5} | Time elapsed: {math.round(time.time() - start)}")
+
+nodesToJson(nodes, links)
+print("Nodes and links written")
