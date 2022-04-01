@@ -43,7 +43,26 @@ class Link:
 wikiQueue = []
 urlContent = [[], [], [], []]
 
-def findBookTag(contentText):
+def findBookTag(content):
+    try:
+        for wrap in content.find_all(class_="mw-references-wrap"): 
+            wrap.decompose()
+    except:
+        pass
+    
+    try:
+        for navbar in content.find_all(class_="navbar"): 
+            navbar.decompose()
+    except:
+        pass
+
+    try:
+        content.find(class_="navaid").decompose()
+    except:
+        pass
+
+    contentText = content.text
+    
     tags = []
 
     if "Elantris" in contentText:
@@ -62,10 +81,18 @@ def findBookTag(contentText):
         tags.append("Reckoners")
     if "Stormlight Archive" in contentText:
         tags.append("Stormlight Archive")
-    if "Legion" in contentText:
+    if "Legion (series)" in contentText:
         tags.append("Legion")
     if "Emperor's Soul" in contentText:
         tags.append("The Emperor's Soul")
+    if "Warbreaker" in contentText:
+        tags.append("Warbreaker")
+    if "White Sand" in contentText:
+        tags.append("White Sand")
+    if "Sixth of the Dusk" in contentText:
+        tags.append("Sixth of the Dusk")
+    if "Cosmere" in contentText:
+        tags.append("Cosmere")
     if "Skyward" in contentText:
         tags.append("Skyward")  
  
@@ -83,8 +110,6 @@ def getTitle(url):
     if ("File:" in url or "Artists" in url or "edit" in url or "/Cover" in url
             or "#" in url or ":" in url or "wikipedia" in url):
         return None
-
-    # print(f"Getting: {BaseURL + url}")
 
     try:
         pageHTML = requests.get(url=BaseURL + url, headers=headers)
@@ -173,7 +198,7 @@ def pageToNode(title, content, node):
                 links.append(link.result())
                 node.val += 1
 
-    node.bookTags = findBookTag(content.text)
+    node.bookTags = findBookTag(content)
 
     nodes.append(node)
 
@@ -209,7 +234,7 @@ while len(wikiQueue) > 0:
 
     wikiPage = wikiQueue.pop(0)
     print(
-        f"\nQueue : {str(len(wikiQueue)) :<5} Completed:{completed :<5} | Curent: {wikiPage:<20}  | Time elapsed: {round(time.time() - start)}s | {round((time.time() - start / 60))}m")
+        f"\nQueue : {str(len(wikiQueue)) :<5} Completed:{completed :<5} | Curent: {wikiPage:<20}  | Time elapsed: {round(time.time() - start)}s | {round((time.time() - start) / 60)}m")
 
     pageIndex = urlContent[1].index(wikiPage)
     content = urlContent[2][pageIndex]
@@ -223,7 +248,7 @@ while len(wikiQueue) > 0:
     completed += 1
 
 print(
-    f"Queue:{str(len(wikiQueue)) :<5} Completed:{completed :<5} | Time elapsed: {round(time.time() - start)}s | {round((time.time() - start / 60))}m")
+    f"Queue:{str(len(wikiQueue)) :<5} Completed:{completed :<5} | Time elapsed: {round(time.time() - start)}s | {round((time.time() - start) / 60)}m")
 
 nodesToJson(nodes, links)
 print("Nodes and links written")
