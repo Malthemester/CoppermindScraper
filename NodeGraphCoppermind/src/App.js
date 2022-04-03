@@ -5,7 +5,7 @@ import './App.css';
 
 function App() {
   const graphRef = useRef();
-  const [hiddenTags, setHiddenTags] = useState(["Alcatraz", "The Rithmatist", "Reckoners" , "Legion", "Skyward"]);
+  const [hiddenTags, setHiddenTags] = useState(["Alcatraz", "The Rithmatist", "Reckoners", "Legion", "Skyward"]);
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function App() {
   // console.log(nodesData.filter((node) => node.bookTags.some(tag => hiddenTags.includes(tag))))
 
   const graphData = useMemo(() => {
-    
+
     // var data = {
     //   nodes: nodesData.filter((node) => !hiddenTags.includes(node.bookTags)),
     //   links: linksData
@@ -39,7 +39,7 @@ function App() {
 
     console.log(filterdNodesIDs)
     console.log("Here")
-    
+
     const data = {
       nodes: nodesData.filter((node) => !filterdNodesIDs.includes(node.id)),
       links: linksData.filter((link) => !(filterdNodesIDs.includes(link.target) || filterdNodesIDs.includes(link.source)))
@@ -49,19 +49,13 @@ function App() {
 
     console.log(data.nodes)
     console.log(data.links)
-    
+
     return data
   }, [hiddenTags]);
 
-
-  console.log(nodesData.length) // 3245
-  console.log(linksData.length) // 75804 // 43990
-
-  // const graphData =
-  // {
-  //   nodes: nodesData,
-  //   links: linksData
-  // }
+  const handleClick = (node) => {
+    window.open(node.url);
+  }
 
   return (
     <ForceGraph2D
@@ -69,7 +63,8 @@ function App() {
       warmupTicks={100}
       cooldownTicks={0}
       graphData={graphData}
-      enableNodeDrag={false} 
+      enableNodeDrag={false}
+      onNodeClick={handleClick}
     />
   );
 }
