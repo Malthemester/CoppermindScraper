@@ -194,9 +194,10 @@ def pageToNode(title, content, node):
             processes.append(executor.submit(refToLink, aTag, title))
 
         for link in as_completed(processes):
-            if link.result() and link.result() not in links:
-                links.append(link.result())
+            if link.result():
                 node.val += 1
+                if link.result() not in links:
+                    links.append(link.result())
 
     node.bookTags = findBookTag(content)
 
