@@ -20,9 +20,6 @@ function App() {
 
   useEffect(() => {
 
-    console.log(graphRef)
-    console.log(forceCollide)
-
     graphRef.current.d3Force("link").distance(linkDistance);
     graphRef.current.d3Force('charge').strength(strength);
     graphRef.current.d3Force("collide", forceCollide(80));
@@ -32,8 +29,43 @@ function App() {
   const nodesData = require('./nodesData.json');
   const linksData = require('./linksData.json');
 
+  const nodeColors = ["#0000FF", "#FF0000", "#00FF00", "FF00FF", "#00FFFF", "#FFFF00"]
+  const bookGroups = [
+    ["Mistborn", "Stormlight Archive", "The Emperor's Soul", "Warbreaker", "Sixth of the Dusk", "White Sand"]
+    ["Reckoners"],
+    ["Legion"],
+    ["Skyward"],
+    ["The Rithmatist"],
+    ["Alcatraz"],
+  ]
+  // const bookGroups = [
+  //   ["Elantris"],
+  //   ["Mistborn"],
+  //   ["Mistborn Era 1"],
+  //   ["Mistborn Era 2"],
+  //   ["Stormlight Archive"],
+  //   ["The Emperor's Soul"],
+  //   ["Warbreaker"],
+  //   ["White Sand"],
+  //   ["Sixth of the Dusk"],
+  //   ["Cosmere"],
+  //   ["Cosmere", "Mistborn", "Stormlight Archive", "The Emperor's Soul", "Warbreaker", "Sixth of the Dusk", "White Sand"]
+  //   ["Reckoners"],
+  //   ["Legion"],
+  //   ["Skyward"],
+  //   ["The Rithmatist"],
+  //   ["Alcatraz"],
+  // ]
+
+  const nodeColor = () => {
+    nodesData.forEach(node => {
+      let isSubArr = bookGroups.forEach(group => group.every(e => node.bookTags.includes(e)))
+
+
+    })
+  }
+
   const neighborData = useMemo(() => {
-    console.log("here")
     linksData.forEach(link => {
       const a = nodesData.find(node => node.id == link.source)
       const b = nodesData.find(node => node.id == link.target)
@@ -49,7 +81,6 @@ function App() {
   }, [])
 
   const graphData = useMemo(() => {
-    console.log(hiddenTags)
     var filterdNodes = nodesData.filter((node) => (node.bookTags.every(tag => hiddenTags.includes(tag)) || node.val < minLink))
     var filterdNodesIDs = filterdNodes.map(node => node.id)
 
@@ -67,7 +98,6 @@ function App() {
 
   const handleClick = (node) => {
 
-    console.log(toggelHighlight)
     if (toggelHighlight && hoverNode == node.id) {
       setToggelHighlight(false)
       highlightNodes.clear();
@@ -84,8 +114,6 @@ function App() {
       // graphRef.current.zoomToFit(node);
 
     }
-
-    console.log(toggelHighlight)
   }
 
   const handleNodeHover = (node) => {
@@ -109,15 +137,11 @@ function App() {
 
   const NameTag = (ctx, node, radius) => {
 
-    const zoom = graphRef.current.zoom() * 2 + 1
-    console.log(zoom)
-    const scale = Math.max(3.5 - Math.min(zoom, 2), 0.3)
-    console.log(scale)
+    const scale = graphRef.current.zoom() * 5 + 1
+    const offset = (6 * Math.pow((node.val), 0.3)) + 10
 
-    const width = (3 + node.name.length) * 15 * scale
-    const height = (30 * scale);
-
-    const offset = (4 * Math.pow((node.val), 0.4)) + 20 - (Math.pow(scale, 0.1) * 20)
+    const width = (3 + node.name.length) * 50 / scale
+    const height = (120 / scale);
 
     const x = node.x - (width / 2)
     const y = node.y - (height * 0.8) + offset
@@ -136,7 +160,7 @@ function App() {
     ctx.closePath()
     ctx.fill()
 
-    ctx.font = `${scale * 30}px sans-serif`;
+    ctx.font = `${120 / scale}px sans-serif`;
     ctx.fillStyle = 'white';
     ctx.textAlign = "center"
     ctx.fillText(node.name, node.x, node.y + offset)
@@ -175,6 +199,7 @@ function App() {
         warmupTicks={100}
         cooldownTicks={0}
         graphData={graphData}
+        backgroundColor={"#2e2b28"}
         enableNodeDrag={false}
         onNodeClick={handleClick}
         onNodeRightClick={handleRightClick}
@@ -190,7 +215,7 @@ function App() {
         linkVisibility={link => (hoverNode == link.target.id || hoverNode == link.source.id)}
         linkOpacity={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 0.5 : 0.05}
         linkWidth={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 1.4 : 0.05}
-        linkColor={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? "red" : "black"}
+        linkColor={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? "#f1f1f1" : "black"}
       />
     </div>
   );
