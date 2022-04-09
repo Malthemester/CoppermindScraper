@@ -15,13 +15,13 @@ links = []
 
 class Node:
     val = 0
-    bookTags = []
+    tags = []
     def __init__(self, title, url):
         self.title = title
         self.url = url
 
     def json(self):
-        return {"id": self.title, "name": self.title, "val": self.val, "url": self.url, "bookTags": self.bookTags}
+        return {"id": self.title, "name": self.title, "val": self.val, "url": self.url, "tags": self.tags}
 
 class Link:
     val = 0
@@ -61,42 +61,25 @@ def findBookTag(content):
     except:
         pass
 
-    contentText = content.text
+    contentText = content.text.lower()
     
-    tags = []
+    tags = ["stormlight archive", "alcatraz","mistborn", "mistborn era 1", "mistborn era 2", "elantris",
+            "rithmatist", "reckoners", "legion (series)", "emperor's soul",
+            "warbreaker", "white sand", "sixth of the susk", "cosmere", "skyward"]
+    pageTags = []
+    
+    tagCount = 0
+    mainTag = ""
 
-    if "Elantris" in contentText:
-        tags.append("Elantris")
-    if "Alcatraz" in contentText:
-        tags.append("Alcatraz")
-    if "Mistborn" in contentText:
-        tags.append("Mistborn")
-    if "Mistborn Era 1" in contentText:
-        tags.append("Mistborn Era 1")
-    if "Mistborn Era 2" in contentText:
-        tags.append("Mistborn Era 2")
-    if "Rithmatist" in contentText:
-        tags.append("The Rithmatist")
-    if "Reckoners" in contentText:
-        tags.append("Reckoners")
-    if "Stormlight Archive" in contentText:
-        tags.append("Stormlight Archive")
-    if "Legion (series)" in contentText:
-        tags.append("Legion")
-    if "Emperor's Soul" in contentText:
-        tags.append("The Emperor's Soul")
-    if "Warbreaker" in contentText:
-        tags.append("Warbreaker")
-    if "White Sand" in contentText:
-        tags.append("White Sand")
-    if "Sixth of the Dusk" in contentText:
-        tags.append("Sixth of the Dusk")
-    if "Cosmere" in contentText:
-        tags.append("Cosmere")
-    if "Skyward" in contentText:
-        tags.append("Skyward")  
- 
-    return tags
+    for tag in tags:
+        if tag in contentText:
+            pageTags.append(tag)
+
+        if contentText.count(tag) > tagCount:
+            mainTag = tag
+            tagCount = contentText.count(tag)
+
+    return {"mainTag": mainTag, "bookTags": pageTags}
 
 
 def getTitle(url):
@@ -189,7 +172,7 @@ def pageToNode(title, content, node):
         return
 
     processes = []
-    with ThreadPoolExecutor(max_workers=50) as executor:
+    with ThreadPoolExecutor(max_workers=70) as executor:
         for aTag in aTags:
             processes.append(executor.submit(refToLink, aTag, title))
 
@@ -199,7 +182,7 @@ def pageToNode(title, content, node):
                 if link.result() not in links:
                     links.append(link.result())
 
-    node.bookTags = findBookTag(content)
+    node.tags = findBookTag(content)
 
     nodes.append(node)
 
@@ -234,8 +217,7 @@ start = time.time()
 while len(wikiQueue) > 0:
 
     wikiPage = wikiQueue.pop(0)
-    print(
-        f"\nQueue : {str(len(wikiQueue)) :<5} Completed:{completed :<5} | Curent: {wikiPage:<20}  | Time elapsed: {round(time.time() - start)}s | {round((time.time() - start) / 60)}m")
+    print(f"\nQueue : {str(len(wikiQueue)) :<5} Completed:{completed :<5} | Curent: {wikiPage:<20}  | Time elapsed: {round(time.time() - start)}s | {round((time.time() - start) / 60)}m")
 
     pageIndex = urlContent[1].index(wikiPage)
     content = urlContent[2][pageIndex]

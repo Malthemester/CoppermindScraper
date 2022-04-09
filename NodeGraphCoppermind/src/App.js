@@ -8,62 +8,83 @@ import './App.css';
 
 function App() {
   const graphRef = useRef();
-  const [hiddenTags, setHiddenTags] = useState(["The Rithmatist", "Reckoners", "Legion", "Skyward", "Alcatraz"]);
+  const [hiddenTags, setHiddenTags] = useState(["rithmatist", "reckoners", "legion", "skyward", "alcatraz"]);
   const [highlightNodes, setHighlightNodes] = useState(new Set())
   const [hoverNode, sethoverNode] = useState(null)
   const [toggelHighlight, setToggelHighlight] = useState(false)
 
   const [minLink, setMinLink] = useState(0);
 
-  const [linkDistance, setlinkDistance] = useState(40);
-  const [strength, setStrength] = useState(-1000);
+  const [linkDistance, setlinkDistance] = useState(5);
+  const [strength, setStrength] = useState(-200);
 
   useEffect(() => {
-
     graphRef.current.d3Force("link").distance(linkDistance);
     graphRef.current.d3Force('charge').strength(strength);
-    graphRef.current.d3Force("collide", forceCollide(80));
-
+    graphRef.current.d3Force("collide", forceCollide((node) => (0.88 * Math.pow((node.val), 0.63) + 10)))
   }, [linkDistance]);
 
   const nodesData = require('./nodesData.json');
   const linksData = require('./linksData.json');
 
-  const nodeColors = ["#0000FF", "#FF0000", "#00FF00", "FF00FF", "#00FFFF", "#FFFF00"]
   const bookGroups = [
-    ["Mistborn", "Stormlight Archive", "The Emperor's Soul", "Warbreaker", "Sixth of the Dusk", "White Sand"]
+    ["Mistborn", "Stormlight Archive", "The Emperor's Soul", "Warbreaker", "Sixth of the Dusk", "White Sand", "Cosmere"]
     ["Reckoners"],
     ["Legion"],
     ["Skyward"],
     ["The Rithmatist"],
     ["Alcatraz"],
   ]
-  // const bookGroups = [
-  //   ["Elantris"],
-  //   ["Mistborn"],
-  //   ["Mistborn Era 1"],
-  //   ["Mistborn Era 2"],
-  //   ["Stormlight Archive"],
-  //   ["The Emperor's Soul"],
-  //   ["Warbreaker"],
-  //   ["White Sand"],
-  //   ["Sixth of the Dusk"],
-  //   ["Cosmere"],
-  //   ["Cosmere", "Mistborn", "Stormlight Archive", "The Emperor's Soul", "Warbreaker", "Sixth of the Dusk", "White Sand"]
-  //   ["Reckoners"],
-  //   ["Legion"],
-  //   ["Skyward"],
-  //   ["The Rithmatist"],
-  //   ["Alcatraz"],
-  // ]
 
-  const nodeColor = () => {
+  const nodeColor = useMemo(() => {
     nodesData.forEach(node => {
-      let isSubArr = bookGroups.forEach(group => group.every(e => node.bookTags.includes(e)))
-
-
+       switch(node.tags.mainTag) {
+        case "mistborn":
+          if(node.tags.bookTags.includes("mistborn era 1") && !node.tags.bookTags.includes("mistborn era 2")){
+            node.color = "#ffc400"
+          } else if (!node.tags.bookTags.includes("mistborn era 1") && node.tags.bookTags.includes("mistborn era 2")){
+            node.color = "#ff1100"
+          }else{
+            node.color = "#ff8400"
+          }
+          break; 
+        case "stormlight archive":
+          node.color = "#004cff"
+          break;
+        case "white sand":
+          node.color = "#f2ff9c"
+          break;
+        case "elantris":
+          node.color = "#26ff00"
+          break;
+        case "emperor's soul":
+          node.color = "#00b85f"
+          break;
+        case "reckoners":
+          node.color = "#9cfff0"
+          break;
+        case "sixth of the susk":
+          node.color = "#0a0d94"
+          break;
+        case "legion (series)":
+          node.color = "#b80b5e"
+          break;
+        case "skyward":
+          node.color = "#02061a"
+          break;
+        case "rithmatist":
+          node.color = "#460763"
+          break;
+        case "warbreaker":
+          node.color = "#ffffff"
+        case "cosmere":
+          node.color = "#e1e2e6"
+          break;
+        default:
+          node.color = "white"
+      }
     })
-  }
+  }, [] )
 
   const neighborData = useMemo(() => {
     linksData.forEach(link => {
@@ -81,7 +102,7 @@ function App() {
   }, [])
 
   const graphData = useMemo(() => {
-    var filterdNodes = nodesData.filter((node) => (node.bookTags.every(tag => hiddenTags.includes(tag)) || node.val < minLink))
+    var filterdNodes = nodesData.filter((node) => (node.tags.bookTags.every(tag => hiddenTags.includes(tag)) || node.val < minLink))
     var filterdNodesIDs = filterdNodes.map(node => node.id)
 
     const data = {
@@ -111,8 +132,6 @@ function App() {
       sethoverNode(node.id)
       setHighlightNodes(highlightNodes)
       setToggelHighlight(true)
-      // graphRef.current.zoomToFit(node);
-
     }
   }
 
@@ -137,20 +156,22 @@ function App() {
 
   const NameTag = (ctx, node, radius) => {
 
-    const scale = graphRef.current.zoom() * 5 + 1
-    const offset = (6 * Math.pow((node.val), 0.3)) + 10
+    const scale = graphRef.current.zoom() * 5 + 3
+    const offset = (4 * Math.pow((node.val), 0.3)) + 10
 
-    const width = (3 + node.name.length) * 50 / scale
-    const height = (120 / scale);
+    const width = ctx.measureText(node.name+ "  ").width
+    const height = (138 / scale);
 
     const x = node.x - (width / 2)
-    const y = node.y - (height * 0.8) + offset
+    const y = node.y - (height * 0.77) + offset
 
     if (width < 2 * radius) radius = width / 2
     if (height < 2 * radius) radius = height / 2
 
-    ctx.fillStyle = 'gray'
+    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.globalAlpha = 0.5
 
+    
     ctx.beginPath()
     ctx.moveTo(x + radius, y)
     ctx.arcTo(x + width, y, x + width, y + height, radius)
@@ -159,22 +180,25 @@ function App() {
     ctx.arcTo(x, y, x + width, y, radius)
     ctx.closePath()
     ctx.fill()
-
+    ctx.globalAlpha = 1
+    
     ctx.font = `${120 / scale}px sans-serif`;
     ctx.fillStyle = 'white';
     ctx.textAlign = "center"
     ctx.fillText(node.name, node.x, node.y + offset)
+    ctx.globalAlpha = 0.2
   }
 
   const NODE_R = 2;
 
   const paintRing = useCallback((node, ctx) => {
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, (0.8 * Math.pow((node.val), 0.6)), 0, 2 * Math.PI, false);
-    ctx.fillStyle = node.id == hoverNode ? 'yellow' : 'orange';
-    ctx.fill();
+    ctx.beginPath()
+    ctx.arc(node.x, node.y, (0.8 * Math.pow((node.val), 0.6)), 0, 2 * Math.PI, false)
+    ctx.fillStyle = node.id == hoverNode ? "white" : node.color
+    ctx.globalAlpha = 1
+    ctx.fill()
 
-    NameTag(ctx, node, 5)
+    NameTag(ctx, node, 1)
 
   }, [hoverNode])
 
@@ -193,14 +217,14 @@ function App() {
 
       <ForceGraph2D
         ref={graphRef}
-        onEngineStop={() => graphRef.current.zoomToFit()}
+        // onEngineStop={() => graphRef.current.zoomToFit(400, 20)}
         nodeRelSize={NODE_R}
         autoPauseRedraw={false}
         warmupTicks={100}
         cooldownTicks={0}
         graphData={graphData}
         backgroundColor={"#2e2b28"}
-        enableNodeDrag={false}
+        // enableNodeDrag={false}
         onNodeClick={handleClick}
         onNodeRightClick={handleRightClick}
         nodeCanvasObjectMode={node => highlightNodes.has(node.id) ? 'after' : undefined}
@@ -213,9 +237,9 @@ function App() {
           sethoverNode(null)
         }}
         linkVisibility={link => (hoverNode == link.target.id || hoverNode == link.source.id)}
-        linkOpacity={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 0.5 : 0.05}
-        linkWidth={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 1.4 : 0.05}
-        linkColor={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? "#f1f1f1" : "black"}
+        linkOpacity={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 0.3 : 0.05}
+        linkWidth={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 1 : 0.05}
+        linkColor={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? "#5454ff" : "black"}
       />
     </div>
   );

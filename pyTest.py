@@ -1,22 +1,23 @@
-class Link:
-    val = 0
-
-    def __init__(self, source, target):
-        self.source = source
-        self.target = target
+def sttof():
+    tags = ["Elantris", "Alcatraz","Mistborn", "Mistborn Era 1", "Mistborn Era 2",
+            "Rithmatist", "Reckoners", "Stormlight Archive", "Legion (series)", "Emperor's Soul",
+            "Warbreaker", "White Sand", "Sixth of the Dusk", "Cosmere", "Skyward"]
+    pageTags = []
     
-    def __eq__(self, other):
-        if isinstance(other, Link):
-            if (self.source == other.source and self.target == other.target) or (self.source == other.target and self.target == other.source):
-                return True
-        return False
+    tagCount = 0
+    mainTag = ""
 
-    def json(self):
-        return {"source": self.source, "target": self.target}
+    contentText = "Elantris Elantris Elantris Mistborn Mistborn cosmere cosmerecosmere -cosmere"
 
-links = []
-links.append(Link(1,2))
-links.append(Link(1,3))
+    contentText = contentText.lower()
+    for tag in tags:
+        if tag in contentText:
+            pageTags.append(tag)
 
-print(Link(1,2) == Link(1,2))
-print(Link(2,1) in links)
+        if contentText.count(tag) > tagCount:
+            mainTag = tag
+            tagCount = contentText.count(tag)
+
+    return {"mainTag": mainTag, "bookTags": pageTags}
+
+print(sttof())
