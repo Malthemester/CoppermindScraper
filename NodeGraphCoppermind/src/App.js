@@ -8,7 +8,7 @@ import './App.css';
 
 function App() {
   const graphRef = useRef();
-  const [hiddenTags, setHiddenTags] = useState(["rithmatist", "reckoners", "legion", "skyward", "alcatraz"]);
+  const [hiddenTags, setHiddenTags] = useState(["rithmatist", "reckoners", "legion (series)", "cytoverse", "alcatraz"]);
   const [highlightNodes, setHighlightNodes] = useState(new Set())
   const [hoverNode, sethoverNode] = useState(null)
   const [toggelHighlight, setToggelHighlight] = useState(false)
@@ -26,15 +26,6 @@ function App() {
 
   const nodesData = require('./nodesData.json');
   const linksData = require('./linksData.json');
-
-  const bookGroups = [
-    ["Mistborn", "Stormlight Archive", "The Emperor's Soul", "Warbreaker", "Sixth of the Dusk", "White Sand", "Cosmere"]
-    ["Reckoners"],
-    ["Legion"],
-    ["Skyward"],
-    ["The Rithmatist"],
-    ["Alcatraz"],
-  ]
 
   const nodeColor = useMemo(() => {
     nodesData.forEach(node => {
@@ -55,30 +46,34 @@ function App() {
           node.color = "#f2ff9c"
           break;
         case "elantris":
-          node.color = "#26ff00"
+          node.color = "#96faff"
           break;
         case "emperor's soul":
-          node.color = "#00b85f"
+          node.color = "#b01048"
           break;
         case "reckoners":
           node.color = "#9cfff0"
           break;
-        case "sixth of the susk":
-          node.color = "#0a0d94"
+        case "first of the sun":
+          node.color = "#04c75c"
+          break;
+        case "threnody":
+          node.color = "#04c75c"
           break;
         case "legion (series)":
           node.color = "#b80b5e"
           break;
-        case "skyward":
+        case "cytoverse":
           node.color = "#02061a"
           break;
         case "rithmatist":
           node.color = "#460763"
           break;
         case "warbreaker":
-          node.color = "#ffffff"
+          node.color = "#808080"
+          break;
         case "cosmere":
-          node.color = "#e1e2e6"
+          node.color = "#1d052e"
           break;
         default:
           node.color = "white"
@@ -102,7 +97,9 @@ function App() {
   }, [])
 
   const graphData = useMemo(() => {
-    var filterdNodes = nodesData.filter((node) => (node.tags.bookTags.every(tag => hiddenTags.includes(tag)) || node.val < minLink))
+    console.log(hiddenTags)
+
+    var filterdNodes = nodesData.filter((node) => (hiddenTags.includes(node.tags.mainTag) || node.tags.mainTag == "" ) || node.val < minLink)
     var filterdNodesIDs = filterdNodes.map(node => node.id)
 
     const data = {
@@ -207,13 +204,31 @@ function App() {
   return (
     <div>
 
-      {/* <SliderInput value={minLink} setValue={setMinLink}></SliderInput>
+      {/* 
+      <SliderInput value={minLink} setValue={setMinLink}></SliderInput>
       <SliderInput value={linkDistance} setValue={setlinkDistance} max={300}></SliderInput>
       <SliderInput value={strength} setValue={setStrength} max={300} min={-2000}></SliderInput>
   
       <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Alcatraz"}></Tag>
       <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Warbreaker"}></Tag>
-      <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Stormlight Archive"}></Tag> */}
+    */}
+    <Tag value={hiddenTags} setTags={setHiddenTags} text={"Corsmere"}  offset={5}
+      tags={
+        [
+          "stormlight archive", 
+          "mistborn", "mistborn era 1", "mistborn era 2", 
+          "elantris",
+          "rithmatist",
+          "emperor's soul",
+          "warbreaker", 
+          "white sand", 
+          "first of the sun", 
+          "threnody", 
+          "cosmere"
+        ]}></Tag> 
+
+<Tag value={hiddenTags} setTags={setHiddenTags} text={"Non-Corsmere"} offset={30}
+      tags={["alcatraz", "rithmatist", "reckoners", "legion (series)", "cytoverse"]}></Tag> 
 
       <ForceGraph2D
         ref={graphRef}

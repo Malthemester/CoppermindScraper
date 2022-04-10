@@ -12,7 +12,6 @@ headers = { 'User-Agent': "Scraping coppermids to visualize it. Contact me at Di
 nodes = []
 links = []
 
-
 class Node:
     val = 0
     tags = []
@@ -39,7 +38,6 @@ class Link:
     def json(self):
         return {"source": self.source, "target": self.target}
 
-
 wikiQueue = []
 urlContent = [[], [], [], []]
 
@@ -65,7 +63,7 @@ def findBookTag(content):
     
     tags = ["stormlight archive", "alcatraz","mistborn", "mistborn era 1", "mistborn era 2", "elantris",
             "rithmatist", "reckoners", "legion (series)", "emperor's soul",
-            "warbreaker", "white sand", "sixth of the susk", "cosmere", "skyward"]
+            "warbreaker", "white sand", "first of the sun", "threnody", "cosmere", "cytoverse"]
     pageTags = []
     
     tagCount = 0

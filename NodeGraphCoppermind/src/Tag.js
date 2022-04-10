@@ -1,30 +1,46 @@
 import React, { useState } from 'react';
 export default function Tag(props) {
-    return (
-        <div>
-            <p>{props.tag}</p>
-            <input 
-                type="checkbox" 
-                checked={props.value.includes(props.tag)}
-                class="slider round"
-                onChange={(newValue) => {
-                    console.log(newValue)
-                    console.log(props.value)
-                    console.log(props.setValue)
-                    // console.log(props.value.indexOf(props.tag))
-                    const inFilter = props.value.includes(props.tag)
-                    if (newValue.target.checked){
-                        if (!inFilter){
-                            props.setValue(props.value.push(props.tag))
-                        }
-                    } 
-                    else
-                        if (inFilter){
-                            // props.setValue(props.value.splice(props.value.findIndex(props.tag), 1))
-                        }
+    
+    const [tags, setTags] = React.useState(props.tags);
 
-                }}
-            />
+    const style = {
+        color: "white",
+        position: "absolute",
+        zIndex : "10",
+        top: `${props.offset}px`
+    };
+
+
+    const colorStyle = {
+        color: "white",
+    };
+    
+    const handleHiddenTags = (change) => {
+        if (change) {
+            props.setTags(props.value.filter(tag => !tags.includes(tag)))
+        }
+        else{
+            var newHiddenTags = props.value
+            tags.forEach(tag => {
+                if(!newHiddenTags.includes(tag)){
+                    newHiddenTags.push(tag)
+                }
+            })
+            console.log(newHiddenTags)
+            props.setTags(newHiddenTags)
+        }
+    }
+
+    return (
+        <div style={style}>
+            <p style={colorStyle}>{props.text}
+                <input 
+                    type="checkbox" 
+                    checked={true}
+                    class="slider round"
+                    onChange={(change) => {handleHiddenTags(change)}}
+                />
+            </p>
         </div>
     );
   }
