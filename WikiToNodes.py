@@ -7,14 +7,17 @@ from bs4 import BeautifulSoup
 BaseURL = "https://coppermind.net"
 URL = "/wiki/Cosmere"
 
-headers = { 'User-Agent': "Scraping coppermids to visualize it. Contact me at Discord: Emtkjaer#6677"}
+headers = {
+    'User-Agent': "Scraping coppermids to visualize it. Contact me at Discord: Emtkjaer#6677"}
 
 nodes = []
 links = []
 
+
 class Node:
     val = 0
     tags = []
+
     def __init__(self, title, url):
         self.title = title
         self.url = url
@@ -22,13 +25,14 @@ class Node:
     def json(self):
         return {"id": self.title, "name": self.title, "val": self.val, "url": self.url, "tags": self.tags}
 
+
 class Link:
     val = 0
 
     def __init__(self, source, target):
         self.source = source
         self.target = target
-    
+
     def __eq__(self, other):
         if isinstance(other, Link):
             if (self.source == other.source and self.target == other.target) or (self.source == other.target and self.target == other.source):
@@ -38,18 +42,20 @@ class Link:
     def json(self):
         return {"source": self.source, "target": self.target}
 
+
 wikiQueue = []
 urlContent = [[], [], [], []]
 
+
 def findBookTag(content):
     try:
-        for wrap in content.find_all(class_="mw-references-wrap"): 
+        for wrap in content.find_all(class_="mw-references-wrap"):
             wrap.decompose()
     except:
         pass
-    
+
     try:
-        for navbar in content.find_all(class_="navbar"): 
+        for navbar in content.find_all(class_="navbar"):
             navbar.decompose()
     except:
         pass
@@ -60,22 +66,39 @@ def findBookTag(content):
         pass
 
     contentText = content.text.lower()
-    
-    tags = ["stormlight archive", "alcatraz","mistborn", "mistborn era 1", "mistborn era 2", "elantris",
-            "rithmatist", "reckoners", "legion (series)", "emperor's soul",
-            "warbreaker", "white sand", "first of the sun", "threnody", "cosmere", "cytoverse"]
+
+    tagsArray = [
+        ["stormlight archive"],
+        ["alcatraz"],
+        ["mistborn"],
+        ["mistborn era 1", "mistborn"],
+        ["mistborn era 2"],
+        ["elantris"],
+        ["rithmatist"],
+        ["reckoners"],
+        ["legion (series)"],
+        ["emperor's soul"],
+        ["warbreaker"],
+        ["white sand"],
+        ["first of the sun"],
+        ["threnody"],
+        ["cosmere"],
+        ["skyward", "cytoverse"],
+        ["brandon sanderson"]]
+
     pageTags = []
-    
+
     tagCount = 0
     mainTag = ""
 
-    for tag in tags:
-        if tag in contentText:
-            pageTags.append(tag)
+    for tags in tagsArray:
+        for tag in tags:
+            if tag in contentText:
+                pageTags.append(tags[0])
 
-        if contentText.count(tag) > tagCount:
-            mainTag = tag
-            tagCount = contentText.count(tag)
+            if contentText.count(tag) > tagCount:
+                mainTag = tag
+                tagCount = contentText.count(tag)
 
     return {"mainTag": mainTag, "bookTags": pageTags}
 
@@ -133,6 +156,7 @@ def getTitle(url):
     print(f"Queued: {title :<28} from: {url}")
 
     return title
+
 
 def refToLink(a, title):
 

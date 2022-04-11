@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { ForceGraph2D, ForceGraph3D, ForceGraphVR, ForceGraphAR } from 'react-force-graph';
-import { forceCollide } from "d3-force";
+import { forceCollide, forceCenter } from "d3-force";
 import SliderInput from './Slider'
 import Tag from './Tag'
 
@@ -8,7 +8,8 @@ import './App.css';
 
 function App() {
   const graphRef = useRef();
-  const [hiddenTags, setHiddenTags] = useState(["rithmatist", "reckoners", "legion (series)", "cytoverse", "alcatraz"]);
+  // const [hiddenTags, setHiddenTags] = useState(["rithmatist", "reckoners", "legion (series)", "cytoverse", "alcatraz"]);
+  const [hiddenTags, setHiddenTags] = useState([]);
   const [highlightNodes, setHighlightNodes] = useState(new Set())
   const [hoverNode, sethoverNode] = useState(null)
   const [toggelHighlight, setToggelHighlight] = useState(false)
@@ -16,12 +17,19 @@ function App() {
   const [minLink, setMinLink] = useState(0);
 
   const [linkDistance, setlinkDistance] = useState(5);
-  const [strength, setStrength] = useState(-200);
+  const [strength, setStrength] = useState(-100);
+
+  const [data, setData] = useState();
+  const [filterData, setFilterData] = useState();
 
   useEffect(() => {
+    graphRef.current.d3Force('charge').distanceMax(2000)
     graphRef.current.d3Force("link").distance(linkDistance);
     graphRef.current.d3Force('charge').strength(strength);
-    graphRef.current.d3Force("collide", forceCollide((node) => (0.88 * Math.pow((node.val), 0.63) + 10)))
+    graphRef.current.d3Force("collide", forceCollide((node) => (0.7 * Math.pow((node.val), 0.65) + 8)))
+
+    graphRef.current.zoom(0.2)
+
   }, [linkDistance]);
 
   const nodesData = require('./nodesData.json');
@@ -29,16 +37,16 @@ function App() {
 
   const nodeColor = useMemo(() => {
     nodesData.forEach(node => {
-       switch(node.tags.mainTag) {
+      switch (node.tags.mainTag) {
         case "mistborn":
-          if(node.tags.bookTags.includes("mistborn era 1") && !node.tags.bookTags.includes("mistborn era 2")){
+          if (node.tags.bookTags.includes("mistborn era 1") && !node.tags.bookTags.includes("mistborn era 2")) {
             node.color = "#ffc400"
-          } else if (!node.tags.bookTags.includes("mistborn era 1") && node.tags.bookTags.includes("mistborn era 2")){
+          } else if (!node.tags.bookTags.includes("mistborn era 1") && node.tags.bookTags.includes("mistborn era 2")) {
             node.color = "#ff1100"
-          }else{
+          } else {
             node.color = "#ff8400"
           }
-          break; 
+          break;
         case "stormlight archive":
           node.color = "#004cff"
           break;
@@ -67,7 +75,7 @@ function App() {
           node.color = "#02061a"
           break;
         case "rithmatist":
-          node.color = "#460763"
+          node.color = "#c400b4"
           break;
         case "warbreaker":
           node.color = "#808080"
@@ -75,11 +83,14 @@ function App() {
         case "cosmere":
           node.color = "#1d052e"
           break;
+        case "brandon":
+          node.color = "#8f5acc"
+          break;
         default:
           node.color = "white"
       }
     })
-  }, [] )
+  }, [])
 
   const neighborData = useMemo(() => {
     linksData.forEach(link => {
@@ -99,7 +110,8 @@ function App() {
   const graphData = useMemo(() => {
     console.log(hiddenTags)
 
-    var filterdNodes = nodesData.filter((node) => (hiddenTags.includes(node.tags.mainTag) || node.tags.mainTag == "" ) || node.val < minLink)
+    // var filterdNodes = nodesData.filter((node) => (hiddenTags.includes(node.tags.mainTag) || node.tags.mainTag == "") || node.val < minLink)
+    var filterdNodes = nodesData.filter((node) => (hiddenTags.includes(node.tags.mainTag) || node.val < minLink))
     var filterdNodesIDs = filterdNodes.map(node => node.id)
 
     const data = {
@@ -107,8 +119,10 @@ function App() {
       links: linksData.filter((link) => !(filterdNodesIDs.includes(link.target) || filterdNodesIDs.includes(link.source)))
     };
 
-    return data
-  }, [hiddenTags, minLink, linkDistance, strength, highlightNodes])
+    const newData = JSON.parse(JSON.stringify(data))
+
+    setFilterData(newData)
+  }, [hiddenTags, minLink, linkDistance, strength, highlightNodes, data])
 
   const handleRightClick = (node) => {
     window.open(node.url);
@@ -156,7 +170,7 @@ function App() {
     const scale = graphRef.current.zoom() * 5 + 3
     const offset = (4 * Math.pow((node.val), 0.3)) + 10
 
-    const width = ctx.measureText(node.name+ "  ").width
+    const width = ctx.measureText(node.name + "  ").width
     const height = (138 / scale);
 
     const x = node.x - (width / 2)
@@ -168,7 +182,7 @@ function App() {
     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
     ctx.globalAlpha = 0.5
 
-    
+
     ctx.beginPath()
     ctx.moveTo(x + radius, y)
     ctx.arcTo(x + width, y, x + width, y + height, radius)
@@ -178,7 +192,7 @@ function App() {
     ctx.closePath()
     ctx.fill()
     ctx.globalAlpha = 1
-    
+
     ctx.font = `${120 / scale}px sans-serif`;
     ctx.fillStyle = 'white';
     ctx.textAlign = "center"
@@ -212,23 +226,23 @@ function App() {
       <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Alcatraz"}></Tag>
       <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Warbreaker"}></Tag>
     */}
-    <Tag value={hiddenTags} setTags={setHiddenTags} text={"Corsmere"}  offset={5}
-      tags={
-        [
-          "stormlight archive", 
-          "mistborn", "mistborn era 1", "mistborn era 2", 
-          "elantris",
-          "rithmatist",
-          "emperor's soul",
-          "warbreaker", 
-          "white sand", 
-          "first of the sun", 
-          "threnody", 
-          "cosmere"
-        ]}></Tag> 
+      <Tag value={hiddenTags} setTags={setHiddenTags} text={"Corsmere"} offset={5}
+        tags={
+          [
+            "stormlight archive",
+            "mistborn", "mistborn era 1", "mistborn era 2",
+            "elantris",
+            "rithmatist",
+            "emperor's soul",
+            "warbreaker",
+            "white sand",
+            "first of the sun",
+            "threnody",
+            "cosmere"
+          ]}></Tag>
 
-<Tag value={hiddenTags} setTags={setHiddenTags} text={"Non-Corsmere"} offset={30}
-      tags={["alcatraz", "rithmatist", "reckoners", "legion (series)", "cytoverse"]}></Tag> 
+      <Tag value={hiddenTags} setTags={setHiddenTags} text={"Non-Corsmere"} offset={40}
+        tags={["alcatraz", "rithmatist", "reckoners", "legion (series)", "cytoverse", ""]}></Tag>
 
       <ForceGraph2D
         ref={graphRef}
@@ -237,7 +251,7 @@ function App() {
         autoPauseRedraw={false}
         warmupTicks={100}
         cooldownTicks={0}
-        graphData={graphData}
+        graphData={filterData}
         backgroundColor={"#2e2b28"}
         // enableNodeDrag={false}
         onNodeClick={handleClick}
