@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { ForceGraph2D, ForceGraph3D, ForceGraphVR, ForceGraphAR } from 'react-force-graph';
 import { forceCollide, forceCenter } from "d3-force";
-import SliderInput from './Slider'
-import Tag from './Tag'
+import SliderInput from './Components/Slider'
+import TagsManager from './Components/TagsManager'
+import Toggle from './Components/Toggle'
 
 import './App.css';
 
@@ -13,6 +14,8 @@ function App() {
   const [highlightNodes, setHighlightNodes] = useState(new Set())
   const [hoverNode, sethoverNode] = useState(null)
   const [toggelHighlight, setToggelHighlight] = useState(false)
+
+  const [toggelLinks, setToggelLinks] = useState(false)
 
   const [minLink, setMinLink] = useState(0);
 
@@ -83,7 +86,7 @@ function App() {
         case "cosmere":
           node.color = "#1d052e"
           break;
-        case "brandon":
+        case "brandon sanderson":
           node.color = "#8f5acc"
           break;
         default:
@@ -111,7 +114,7 @@ function App() {
     console.log(hiddenTags)
 
     // var filterdNodes = nodesData.filter((node) => (hiddenTags.includes(node.tags.mainTag) || node.tags.mainTag == "") || node.val < minLink)
-    var filterdNodes = nodesData.filter((node) => (hiddenTags.includes(node.tags.mainTag) || node.val < minLink))
+    var filterdNodes = nodesData.filter((node) => (hiddenTags.includes(node.tags.mainTag) || node.val < minLink) || node.tags.mainTag == "")
     var filterdNodesIDs = filterdNodes.map(node => node.id)
 
     const data = {
@@ -182,7 +185,6 @@ function App() {
     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
     ctx.globalAlpha = 0.5
 
-
     ctx.beginPath()
     ctx.moveTo(x + radius, y)
     ctx.arcTo(x + width, y, x + width, y + height, radius)
@@ -226,23 +228,10 @@ function App() {
       <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Alcatraz"}></Tag>
       <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Warbreaker"}></Tag>
     */}
-      <Tag value={hiddenTags} setTags={setHiddenTags} text={"Corsmere"} offset={5}
-        tags={
-          [
-            "stormlight archive",
-            "mistborn", "mistborn era 1", "mistborn era 2",
-            "elantris",
-            "rithmatist",
-            "emperor's soul",
-            "warbreaker",
-            "white sand",
-            "first of the sun",
-            "threnody",
-            "cosmere"
-          ]}></Tag>
+      
+      <TagsManager hiddenTags={hiddenTags} setHiddenTags={setHiddenTags}></TagsManager>
 
-      <Tag value={hiddenTags} setTags={setHiddenTags} text={"Non-Corsmere"} offset={40}
-        tags={["alcatraz", "rithmatist", "reckoners", "legion (series)", "cytoverse", ""]}></Tag>
+      {/* <Toggle value={toggelLinks} setValue={setToggelLinks} offset={160} text={"Link Visibility"}></Toggle> */}
 
       <ForceGraph2D
         ref={graphRef}
@@ -265,7 +254,7 @@ function App() {
           setHighlightNodes(highlightNodes);
           sethoverNode(null)
         }}
-        linkVisibility={link => (hoverNode == link.target.id || hoverNode == link.source.id)}
+        linkVisibility={link => toggelLinks ? true : (hoverNode == link.target.id || hoverNode == link.source.id)}
         linkOpacity={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 0.3 : 0.05}
         linkWidth={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 1 : 0.05}
         linkColor={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? "#5454ff" : "black"}

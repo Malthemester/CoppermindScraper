@@ -68,23 +68,24 @@ def findBookTag(content):
     contentText = content.text.lower()
 
     tagsArray = [
-        ["stormlight archive"],
+        ["stormlight archive", "roshar"],
         ["alcatraz"],
-        ["mistborn"],
-        ["mistborn era 1", "mistborn"],
+        ["mistborn", "scadrial", "scadrian"],
+        ["mistborn era 1"],
         ["mistborn era 2"],
         ["elantris"],
         ["rithmatist"],
         ["reckoners"],
         ["legion (series)"],
         ["emperor's soul"],
-        ["warbreaker"],
+        ["warbreaker", "nalthis"],
         ["white sand"],
         ["first of the sun"],
         ["threnody"],
         ["cosmere"],
         ["skyward", "cytoverse"],
-        ["brandon sanderson"]]
+        ["brandon sanderson"],
+        ["dark one"]]
 
     pageTags = []
 
@@ -92,13 +93,17 @@ def findBookTag(content):
     mainTag = ""
 
     for tags in tagsArray:
+        tagGroup = 0
         for tag in tags:
-            if tag in contentText:
-                pageTags.append(tags[0])
+            if (tag in contentText):
+                if tags[0] not in pageTags:
+                    pageTags.append(tags[0])
+                
+                tagGroup += contentText.count(tag)
 
-            if contentText.count(tag) > tagCount:
-                mainTag = tag
-                tagCount = contentText.count(tag)
+                if tagGroup > tagCount:
+                    mainTag = tags[0]
+                    tagCount = tagGroup
 
     return {"mainTag": mainTag, "bookTags": pageTags}
 
