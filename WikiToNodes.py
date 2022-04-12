@@ -79,7 +79,7 @@ def findBookTag(content):
         ["legion (series)"],
         ["emperor's soul"],
         ["warbreaker", "nalthis"],
-        ["white sand"],
+        ["white sand", "taldain"],
         ["first of the sun"],
         ["threnody"],
         ["cosmere"],
@@ -98,7 +98,7 @@ def findBookTag(content):
             if (tag in contentText):
                 if tags[0] not in pageTags:
                     pageTags.append(tags[0])
-                
+
                 tagGroup += contentText.count(tag)
 
                 if tagGroup > tagCount:
