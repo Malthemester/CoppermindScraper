@@ -40,3 +40,10 @@
 .ForceGraph2D{
   overflow: hidden;
 }
+
+.dot {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  display: inline-block;
+}

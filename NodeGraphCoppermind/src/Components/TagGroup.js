@@ -1,52 +1,54 @@
 import React, { useState } from 'react';
-export default function Tag(props) {
+import Tag from './Tag'
+export default function TagGroup(props) {
 
-    const [tags, setTags] = React.useState(props.tags);
-
-    const needChecked = (hiddenTags) => {
-        return !tags.every(tag => hiddenTags.includes(tag))
-    }
-
+    const [expand , setExpand] = React.useState(true);
     const style = {
-        color: "white",
-        position: "absolute",
-        zIndex: "10",
-        top: `${props.offset}px`
+        margin: "10px"
     };
 
-    const colorStyle = {
-        color: "white",
-    };
-
-    const handleHiddenTags = (checked) => {
-        if (checked) {
-            props.setTags(props.value.filter(tag => !tags.includes(tag)))
-        }
-        else {
-            var newHiddenTags = props.value
-            tags.forEach(tag => {
-                if (!newHiddenTags.includes(tag)) {
-                    newHiddenTags.push(tag)
-                }
-            })
-            props.setTags([...newHiddenTags])
-        }
+    const individualTag = (tag, text, hiddenTags, setHiddenTags) => {
+        return (
+        <Tag 
+            value={hiddenTags} 
+            setTags={setHiddenTags} 
+            text={text} 
+            tag={tag}>
+        </Tag>)
     }
 
-    const individualTag = (tag) => {
+    const ReturnTags = () =>{
+        var toggelTags = []
 
+        props.tagsContext.forEach(context => { 
+            toggelTags.push(
+                <Tag 
+                    value={props.hiddenTags} 
+                    setTags={props.setHiddenTags} 
+                    tags={context[0]}
+                    text={context[1]}>
+                </Tag>
+            )
+        })
+        return toggelTags
     }
 
     return (
-        <div>
-            <p style={colorStyle}>{props.text}
-                <input
-                    type="checkbox"
-                    checked={needChecked(props.value)}
-                    class="slider round"
-                    onChange={(change) => { handleHiddenTags(change.target.checked) }}
-                />
-            </p>
+        <div >
+            <Tag 
+                value={props.hiddenTags} 
+                setTags={props.setHiddenTags} 
+                tags={props.tags}
+                text={props.text}
+                group={true}
+                expand={expand}
+                setExpand={setExpand}>
+            </Tag>
+
+            {expand ? 
+            <div style={style}>
+                <ReturnTags></ReturnTags>
+            </div>: <></>}
         </div>
     );
 }

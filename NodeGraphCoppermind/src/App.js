@@ -3,13 +3,12 @@ import { ForceGraph2D, ForceGraph3D, ForceGraphVR, ForceGraphAR } from 'react-fo
 import { forceCollide, forceCenter } from "d3-force";
 import SliderInput from './Components/Slider'
 import TagsManager from './Components/TagsManager'
-import Toggle from './Components/Toggle'
+import SearchBar from './Components/SearchBar'
 
 import './App.css';
 
 function App() {
   const graphRef = useRef();
-  // const [hiddenTags, setHiddenTags] = useState(["rithmatist", "reckoners", "legion (series)", "cytoverse", "alcatraz"]);
   const [hiddenTags, setHiddenTags] = useState([]);
   const [highlightNodes, setHighlightNodes] = useState(new Set())
   const [hoverNode, sethoverNode] = useState(null)
@@ -22,7 +21,7 @@ function App() {
   const [linkDistance, setlinkDistance] = useState(5);
   const [strength, setStrength] = useState(-100);
 
-  const [data, setData] = useState();
+  const [data, setData] = useState({nodes:[],links:[]});
   const [filterData, setFilterData] = useState();
 
   useEffect(() => {
@@ -43,11 +42,11 @@ function App() {
       switch (node.tags.mainTag) {
         case "mistborn":
           if (node.tags.bookTags.includes("mistborn era 1") && !node.tags.bookTags.includes("mistborn era 2")) {
-            node.color = "#ffc400"
+            node.color = "#c93814"
           } else if (!node.tags.bookTags.includes("mistborn era 1") && node.tags.bookTags.includes("mistborn era 2")) {
-            node.color = "#ff1100"
+            node.color = "#ff6c36"
           } else {
-            node.color = "#ff8400"
+            node.color = "#D26407"
           }
           break;
         case "stormlight archive":
@@ -57,7 +56,7 @@ function App() {
           node.color = "#f2ff9c"
           break;
         case "elantris":
-          node.color = "#96faff"
+          node.color = "#c4b20a"
           break;
         case "emperor's soul":
           node.color = "#b01048"
@@ -69,13 +68,13 @@ function App() {
           node.color = "#04c75c"
           break;
         case "threnody":
-          node.color = "#04c75c"
+          node.color = "#195a80"
           break;
         case "legion (series)":
           node.color = "#b80b5e"
           break;
-        case "cytoverse":
-          node.color = "#02061a"
+        case "skyward":
+          node.color = "#010a38"
           break;
         case "rithmatist":
           node.color = "#c400b4"
@@ -88,6 +87,12 @@ function App() {
           break;
         case "brandon sanderson":
           node.color = "#8f5acc"
+          break;
+        case "dark one":
+          node.color = "black"
+          break;
+        case "alcatraz":
+          node.color = "#80576f"
           break;
         default:
           node.color = "white"
@@ -131,9 +136,11 @@ function App() {
     window.open(node.url);
   }
 
-  const handleClick = (node) => {
+  const handleClick = (id) => {
 
-    if (toggelHighlight && hoverNode == node.id) {
+    const clickNode = filterData.nodes.find(node => node.id == id)
+
+    if (toggelHighlight && hoverNode == id) {
       setToggelHighlight(false)
       highlightNodes.clear();
       setHighlightNodes(highlightNodes);
@@ -141,9 +148,9 @@ function App() {
     }
     else {
       highlightNodes.clear();
-      highlightNodes.add(node.id)
-      node.neighbors.forEach(neighbor => highlightNodes.add(neighbor))
-      sethoverNode(node.id)
+      highlightNodes.add(id)
+      clickNode.neighbors.forEach(neighbor => highlightNodes.add(neighbor))
+      sethoverNode(id)
       setHighlightNodes(highlightNodes)
       setToggelHighlight(true)
     }
@@ -220,30 +227,26 @@ function App() {
   return (
     <div>
 
-      {/* 
-      <SliderInput value={minLink} setValue={setMinLink}></SliderInput>
-      <SliderInput value={linkDistance} setValue={setlinkDistance} max={300}></SliderInput>
-      <SliderInput value={strength} setValue={setStrength} max={300} min={-2000}></SliderInput>
-  
-      <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Alcatraz"}></Tag>
-      <Tag value={hiddenTags} setValue={setHiddenTags} tag={"Warbreaker"}></Tag>
-    */}
+      <SearchBar data={filterData} handleClick={handleClick}></SearchBar>
       
-      <TagsManager hiddenTags={hiddenTags} setHiddenTags={setHiddenTags}></TagsManager>
+      <TagsManager 
+        hiddenTags={hiddenTags} 
+        setHiddenTags={setHiddenTags}
+        setToggelLinks={setToggelLinks}
+        toggelLinks={toggelLinks}
+      ></TagsManager>
 
-      {/* <Toggle value={toggelLinks} setValue={setToggelLinks} offset={160} text={"Link Visibility"}></Toggle> */}
 
       <ForceGraph2D
         ref={graphRef}
-        // onEngineStop={() => graphRef.current.zoomToFit(400, 20)}
         nodeRelSize={NODE_R}
         autoPauseRedraw={false}
         warmupTicks={100}
         cooldownTicks={0}
+        enableNodeDrag={false}
         graphData={filterData}
         backgroundColor={"#2e2b28"}
-        // enableNodeDrag={false}
-        onNodeClick={handleClick}
+        onNodeClick={(node) => handleClick(node.id)}
         onNodeRightClick={handleRightClick}
         nodeCanvasObjectMode={node => highlightNodes.has(node.id) ? 'after' : undefined}
         nodeCanvasObject={paintRing}
@@ -255,8 +258,8 @@ function App() {
           sethoverNode(null)
         }}
         linkVisibility={link => toggelLinks ? true : (hoverNode == link.target.id || hoverNode == link.source.id)}
-        linkOpacity={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 0.3 : 0.05}
-        linkWidth={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 1 : 0.05}
+        linkOpacity={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 0.3 : 0.1}
+        linkWidth={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? 1 : 0.1}
         linkColor={link => (hoverNode == link.target.id || hoverNode == link.source.id) ? "#5454ff" : "black"}
       />
     </div>

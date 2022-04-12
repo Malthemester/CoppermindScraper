@@ -80,7 +80,7 @@ def findBookTag(content):
         ["emperor's soul"],
         ["warbreaker", "nalthis"],
         ["white sand", "taldain"],
-        ["first of the sun"],
+        ["first of the sun", "sixth of the dusk"],
         ["threnody"],
         ["cosmere"],
         ["skyward", "cytoverse"],
