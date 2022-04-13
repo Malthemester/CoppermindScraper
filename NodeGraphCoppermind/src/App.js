@@ -58,7 +58,7 @@ function App() {
           return "#04c75c"
         case "threnody":
           return "#195a80"
-        case "legion (series)":
+        case "legion":
           return "#b80b5e"
         case "skyward":
           return "#010a38"
@@ -91,8 +91,7 @@ function App() {
 
     nodesData.forEach(node => {
       node.val = node.neighbors.length
-      node.color = colorPicker(node.tags.mainTag)
-
+      
       if (node.tags.mainTag == "mistborn"){
         if (node.tags.bookTags.includes("mistborn era 1") && !node.tags.bookTags.includes("mistborn era 2")) {
           node.tags.mainTag = "mistborn era 1"
@@ -100,6 +99,7 @@ function App() {
           node.tags.mainTag = "mistborn era 2"
         } 
       }
+      node.color = colorPicker(node.tags.mainTag)
     })
   }, [])
 

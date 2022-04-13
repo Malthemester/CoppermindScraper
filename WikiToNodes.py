@@ -76,7 +76,7 @@ def findBookTag(content):
         ["elantris"],
         ["rithmatist"],
         ["reckoners"],
-        ["legion (series)"],
+        ["legion"],
         ["emperor's soul"],
         ["warbreaker", "nalthis"],
         ["white sand", "taldain"],

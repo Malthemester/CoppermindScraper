@@ -17,7 +17,7 @@ export default function TagsManager(props) {
     return (
         <div style={style}>
             <Toggle value={props.toggelLinks} setValue={props.setToggelLinks} text={"Link Visibility"}></Toggle>
-            <Toggle value={props.threeD} setValue={props.setThreeD} text={"3D (Litte l buggy)"}></Toggle>
+            <Toggle value={props.threeD} setValue={props.setThreeD} text={"3D (Little buggy)"}></Toggle>
 
             <TagGroup 
             colorPicker={props.colorPicker}
@@ -61,14 +61,14 @@ export default function TagsManager(props) {
             text={"Group: Non-Cosmere"}
             hiddenTags={props.hiddenTags} 
             setHiddenTags={props.setHiddenTags}
-            tags={["alcatraz", "rithmatist", "reckoners", "legion (series)", "skyward","dark one", ""]}
+            tags={["alcatraz", "rithmatist", "reckoners", "legion", "skyward","dark one", ""]}
 
             tagsContext={
                 [
                     [["alcatraz"], "Alcatraz"],
                     [["rithmatist"],"The Rithmatist"],
                     [["reckoners"],  "The Reckoners"],
-                    [["legion (series)"], "Legion"],
+                    [["legion"], "Legion"],
                     [["skyward"], "Skyward"],
                     [["dark one"], "Dark One"],
                     [[""], "No tag"]
