@@ -7,22 +7,13 @@ export default function TagGroup(props) {
         margin: "10px"
     };
 
-    const individualTag = (tag, text, hiddenTags, setHiddenTags) => {
-        return (
-        <Tag 
-            value={hiddenTags} 
-            setTags={setHiddenTags} 
-            text={text} 
-            tag={tag}>
-        </Tag>)
-    }
-
     const ReturnTags = () =>{
         var toggelTags = []
 
         props.tagsContext.forEach(context => { 
             toggelTags.push(
                 <Tag 
+                    colorPicker={props.colorPicker}
                     value={props.hiddenTags} 
                     setTags={props.setHiddenTags} 
                     tags={context[0]}
@@ -36,6 +27,7 @@ export default function TagGroup(props) {
     return (
         <div >
             <Tag 
+                colorPicker={props.colorPicker}
                 value={props.hiddenTags} 
                 setTags={props.setHiddenTags} 
                 tags={props.tags}

@@ -16,9 +16,11 @@ export default function TagsManager(props) {
 
     return (
         <div style={style}>
-            <Toggle value={props.toggelLinks} setValue={props.setToggelLinks} offset={160} text={"Link Visibility"}></Toggle>
+            <Toggle value={props.toggelLinks} setValue={props.setToggelLinks} text={"Link Visibility"}></Toggle>
+            <Toggle value={props.threeD} setValue={props.setThreeD} text={"3D (Litte l buggy)"}></Toggle>
 
             <TagGroup 
+            colorPicker={props.colorPicker}
             text={"Group: Cosmere"}
             hiddenTags={props.hiddenTags} 
             setHiddenTags={props.setHiddenTags}
@@ -41,6 +43,8 @@ export default function TagsManager(props) {
                     [["cosmere"], "Cosmere"],
                     [["stormlight archive"],"The Stormlight Archive"],
                     [["mistborn", "mistborn era 1", "mistborn era 2"], "Mistborn"],
+                    [["mistborn era 1"], "Mistborn era 1"],
+                    [["mistborn era 2"], "Mistborn era 2"],
                     [["elantris"], "Elantris"],
                     [["emperor's soul"], "The Emperor's soul"],
                     [["warbreaker"], "Warbreaker"],
@@ -53,6 +57,7 @@ export default function TagsManager(props) {
             ></TagGroup>
 
             <TagGroup 
+            colorPicker={props.colorPicker}
             text={"Group: Non-Cosmere"}
             hiddenTags={props.hiddenTags} 
             setHiddenTags={props.setHiddenTags}
